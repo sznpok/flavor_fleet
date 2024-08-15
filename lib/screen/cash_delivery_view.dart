@@ -14,6 +14,15 @@ class _CashOnDeliveryFormState extends State<CashOnDeliveryForm> {
   final TextEditingController _contactController = TextEditingController();
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    _nameController.dispose();
+    _addressController.dispose();
+    _contactController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

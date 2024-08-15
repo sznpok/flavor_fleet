@@ -107,7 +107,7 @@ class ProductDetailPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
-                child: const Text('Cash Delivery'),
+                child: const Text('Cash on Delivery'),
                 onPressed: () {
                   Navigator.push(
                     context,
