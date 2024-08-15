@@ -1,4 +1,3 @@
-import 'package:flaviourfleet/screen/add_product_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'cart_screen.dart'; // Import the CartScreen
@@ -82,16 +81,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-        backgroundColor: Colors.orangeAccent,
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddProductBottomSheet()),
-          );
-        },
-        child: const Icon(Icons.add),
         backgroundColor: Colors.orangeAccent,
       ),
       body: Column(
