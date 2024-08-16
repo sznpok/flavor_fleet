@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:khalti_flutter/khalti_flutter.dart';
 
+import '../model/product_model.dart';
+
 class PaymentForm extends StatefulWidget {
+  final Products? product;
+
+  const PaymentForm({super.key, this.product});
+
   @override
   _PaymentFormState createState() => _PaymentFormState();
 }

@@ -1,9 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flaviourfleet/screen/payment_form.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../bloc/fetch_product_bloc/fetch_product_bloc.dart';
 import '../model/product_model.dart';
-import 'cash_delivery_view.dart';
+import '../widget/custom_toast.dart';
 
 class ProductDetailPage extends StatelessWidget {
   final Products product;
@@ -15,18 +16,13 @@ class ProductDetailPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton.extended(
-        foregroundColor: Colors.orangeAccent,
-        backgroundColor: Colors.white,
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PaymentForm(),
-            ),
-          );
+          context.read<FetchProductBloc>().add(AddToCart(product: product));
+          showToast(title: "Product Added to cart successfully");
         },
-        label: const Text("Pay"),
-        icon: const Icon(Icons.payment),
+        label: const Text(
+          "Add to Cart",
+        ),
       ),
       appBar: AppBar(
         title: Text(product.productName!),
@@ -97,7 +93,7 @@ class ProductDetailPage extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-              ElevatedButton(
+              /*ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.orangeAccent,
                   foregroundColor: Colors.white,
@@ -116,7 +112,7 @@ class ProductDetailPage extends StatelessWidget {
                     ),
                   );
                 },
-              )
+              )*/
             ],
           ),
         ),
