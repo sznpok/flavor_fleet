@@ -1,3 +1,4 @@
+import 'package:flaviourfleet/widget/custom_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:khalti_flutter/khalti_flutter.dart';
 
@@ -16,10 +17,15 @@ class _PaymentFormState extends State<PaymentForm> {
   final _amountController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
+  @override
+  void initState() {
+    _amountController.text = widget.product!.productPrice.toString();
+    super.initState();
+  }
+
   void _payWithKhalti(BuildContext context) {
     if (_formKey.currentState?.validate() ?? false) {
-      final amount =
-          int.parse(_amountController.text) * 100; // Convert to paisa
+      final amount = int.parse(_amountController.text) * 100;
       KhaltiScope.of(context).pay(
         config: PaymentConfig(
           amount: amount,
@@ -31,22 +37,18 @@ class _PaymentFormState extends State<PaymentForm> {
           // Add other preferences if you want (e.g., eBanking, mobile banking)
         ],
         onSuccess: (success) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Payment Successful!')),
-          );
-          // Handle payment success here
+          showToast(
+              title: 'Payment Successful: ${success.token}',
+              color: Colors.green);
         },
         onFailure: (failure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Payment Failed: ${failure.message}')),
-          );
+          showToast(
+              title: 'Payment Failed: ${failure.message}', color: Colors.red);
+
           // Handle payment failure here
         },
         onCancel: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Payment Cancelled')),
-          );
-          // Handle payment cancellation here
+          showToast(title: 'Payment Cancelled:', color: Colors.orange);
         },
       );
     }

@@ -14,7 +14,7 @@ class ProductRepo {
   };
 
   Future<Response> fetchProducts() async {
-    String url = "${ApiUrl.basUrl}product/get_all_products";
+    String url = "${ApiUrl.basUrl}/food/list";
     log("Url $url");
 
     try {
@@ -27,7 +27,7 @@ class ProductRepo {
           },
         ),
       );
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 && response.data['success'] == true) {
         log("Response: ${response.data}");
         return response;
       } else {

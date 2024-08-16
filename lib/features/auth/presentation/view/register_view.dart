@@ -23,7 +23,6 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  final _usernameController = TextEditingController();
 
   bool isObscure = true;
   bool isConfirmObscure = true;
@@ -46,9 +45,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   const SizedBox(height: 20.0),
-                  _buildTextField(_fnameController, 'First Name', false),
-                  const SizedBox(height: 20.0),
-                  _buildTextField(_usernameController, 'Username', false),
+                  _buildTextField(_fnameController, 'Full Name', false),
                   const SizedBox(height: 20.0),
                   _buildTextField(_emailController, 'Email address', false),
                   const SizedBox(height: 20.0),
@@ -106,7 +103,6 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                             context.read<RegisterBloc>().add(
                                   RegisterUserEvent(
                                     name: _fnameController.text,
-                                    username: _usernameController.text,
                                     email: _emailController.text,
                                     password: _passwordController.text.trim(),
                                   ),
@@ -203,6 +199,9 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Please enter $labelText';
+        } else if (_passwordController.text !=
+            _confirmPasswordController.text) {
+          return 'Passwords do not match';
         }
         return null;
       },

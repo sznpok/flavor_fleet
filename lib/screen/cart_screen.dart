@@ -56,10 +56,20 @@ class CartScreen extends StatelessWidget {
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                         ),
+                        SizedBox(
+                          height: 20,
+                        ),
                         Row(
                           children: [
                             Expanded(
                               child: TextButton(
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Colors.green,
+                                  foregroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
                                 onPressed: () {
                                   Navigator.push(
                                     context,
@@ -80,7 +90,7 @@ class CartScreen extends StatelessWidget {
                                 },
                                 child: const Text(
                                   'Checkout',
-                                  style: TextStyle(color: Colors.black),
+                                  style: TextStyle(color: Colors.white),
                                 ),
                               ),
                             ),
@@ -89,6 +99,13 @@ class CartScreen extends StatelessWidget {
                             ),
                             Expanded(
                               child: TextButton(
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Colors.orangeAccent,
+                                  foregroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
                                 onPressed: () {
                                   Navigator.push(
                                     context,

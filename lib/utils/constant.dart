@@ -3,5 +3,6 @@ class ApiToken {
 }
 
 class ApiUrl {
-  static String basUrl = "http://192.168.18.204:8000/api/";
+  static String basUrl = "http://192.168.31.128:4000/api";
+  static String imageUrl = "http://192.168.31.128:4000/images";
 }

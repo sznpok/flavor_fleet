@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/fetch_product_bloc/fetch_product_bloc.dart';
 import '../model/product_model.dart';
+import '../utils/constant.dart';
 import '../widget/custom_toast.dart';
 
 class ProductDetailPage extends StatelessWidget {
@@ -35,7 +36,7 @@ class ProductDetailPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CachedNetworkImage(
-                imageUrl: "${product.productImage}",
+                imageUrl: "${ApiUrl.imageUrl}/${product.productImage}",
                 fit: BoxFit.cover,
                 placeholder: (context, url) => Icon(
                   Icons.image,
@@ -81,11 +82,6 @@ class ProductDetailPage extends StatelessWidget {
                             ),
                   ),
                 ],
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-              Text(
-                'Location: ${product.productLocation ?? ""}',
-                style: Theme.of(context).textTheme.titleMedium,
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Text(

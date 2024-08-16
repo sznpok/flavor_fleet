@@ -18,8 +18,8 @@ class FetchProductBloc extends Bloc<FetchProductEvent, FetchProductState> {
       emit(FetchProductLoading());
       try {
         final response = await productRepo.fetchProducts();
-        if (response.statusCode == 200) {
-          final List<dynamic> dataList = response.data['products'];
+        if (response.statusCode == 200 && response.data['success'] == true) {
+          final List<dynamic> dataList = response.data['data'];
           final List<Products> products =
               dataList.map((data) => Products.fromJson(data)).toList();
           emit(FetchProductLoaded(products: products));

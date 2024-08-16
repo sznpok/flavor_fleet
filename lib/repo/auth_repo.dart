@@ -10,24 +10,20 @@ class AuthRepo {
 
   Future<void> registerUser({
     required String name,
-    required String username,
     required String email,
     required String password,
   }) async {
     try {
       final response = await _dio.post(
-        '${ApiUrl.basUrl}users/signup',
-        // replace with your actual endpoint
+        '${ApiUrl.basUrl}/user/register',
         data: {
           'name': name,
-          'username': username,
           'email': email,
           'password': password,
         },
       );
-
-      if (response.statusCode == 200) {
-        // Handle successful response
+      log(response.statusCode.toString());
+      if (response.statusCode == 200 && response.data['success'] == true) {
         print('User registered successfully');
       } else {
         // Handle error response
@@ -44,18 +40,19 @@ class AuthRepo {
   }) async {
     try {
       final response = await _dio.post(
-        '${ApiUrl.basUrl}users/login',
+        '${ApiUrl.basUrl}/user/login',
         data: {
           'email': email,
           'password': password,
         },
       );
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 && response.data['success'] == true) {
         log("Login successful");
         ApiToken.token = response.data['token'];
         writeTokenAccess(ApiToken.token);
         return response.data;
-      } else if (response.statusCode == 400) {
+      } else if (response.statusCode == 400 &&
+          response.data['status'] == false) {
         log("Login failed ${response.data['errors']}");
         return response.data['errors'];
       } else {

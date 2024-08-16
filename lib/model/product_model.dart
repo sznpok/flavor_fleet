@@ -44,12 +44,12 @@ class Products {
 
   Products.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    productName = json['productName'];
-    productPrice = json['productPrice'];
-    productDescription = json['productDescription'];
-    productCategory = json['productCategory'];
+    productName = json['name'];
+    productPrice = json['price'];
+    productDescription = json['description'];
+    productCategory = json['category'];
     productLocation = json['productLocation'];
-    productImage = json['productImage'];
+    productImage = json['image'];
     isApproved = json['isApproved'];
     createAt = json['createAt'];
     updatedAt = json['updatedAt'];
@@ -59,12 +59,12 @@ class Products {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['_id'] = sId;
-    data['productName'] = productName;
-    data['productPrice'] = productPrice;
-    data['productDescription'] = productDescription;
-    data['productCategory'] = productCategory;
+    data['name'] = productName;
+    data['price'] = productPrice;
+    data['description'] = productDescription;
+    data['category'] = productCategory;
     data['productLocation'] = productLocation;
-    data['productImage'] = productImage;
+    data['image'] = productImage;
     data['isApproved'] = isApproved;
     data['createAt'] = createAt;
     data['updatedAt'] = updatedAt;

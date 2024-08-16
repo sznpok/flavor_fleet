@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/fetch_product_bloc/fetch_product_bloc.dart';
+import '../utils/constant.dart';
 import '../utils/custom_storage.dart';
 
 class ProductView extends StatefulWidget {
@@ -63,6 +64,8 @@ class _ProductGridState extends State<ProductView> {
                       itemCount: state.products.length,
                       itemBuilder: (context, index) {
                         final product = state.products[index];
+                        print(
+                            "http:192.168.31.128:4000/images/${product.productImage}");
                         return GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -83,7 +86,8 @@ class _ProductGridState extends State<ProductView> {
                                 children: [
                                   Expanded(
                                     child: CachedNetworkImage(
-                                      imageUrl: "${product.productImage}",
+                                      imageUrl:
+                                          "${ApiUrl.imageUrl}/${product.productImage}",
                                       fit: BoxFit.cover,
                                       placeholder: (context, url) => Icon(
                                         Icons.image,
@@ -114,8 +118,6 @@ class _ProductGridState extends State<ProductView> {
                                               0.01),
                                   Text(
                                       'Price:\$${product.productPrice != null ? product.productPrice!.toStringAsFixed(2) : ""}'),
-                                  Text(
-                                      "Location: ${product.productLocation ?? ""}"),
                                 ],
                               ),
                             ),
