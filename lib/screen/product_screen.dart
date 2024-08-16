@@ -53,77 +53,85 @@ class _ProductGridState extends State<ProductView> {
             }
             if (state is FetchProductLoaded) {
               return state.products.isNotEmpty
-                  ? GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 8.0,
-                        mainAxisSpacing: 8.0,
-                        childAspectRatio: 0.8,
-                      ),
-                      itemCount: state.products.length,
-                      itemBuilder: (context, index) {
-                        final product = state.products[index];
-                        print(
-                            "http:192.168.31.128:4000/images/${product.productImage}");
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ProductDetailPage(
-                                  product: product,
+                  ? RefreshIndicator(
+                      onRefresh: () async {
+                        BlocProvider.of<FetchProductBloc>(context)
+                            .add(FetchProduct());
+                      },
+                      child: GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 8.0,
+                          mainAxisSpacing: 8.0,
+                          childAspectRatio: 0.8,
+                        ),
+                        itemCount: state.products.length,
+                        itemBuilder: (context, index) {
+                          final product = state.products[index];
+                          print(
+                              "http:192.168.31.128:4000/images/${product.productImage}");
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ProductDetailPage(
+                                    product: product,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Card(
+                              elevation: 5,
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      child: CachedNetworkImage(
+                                        imageUrl:
+                                            "${ApiUrl.imageUrl}/${product.productImage}",
+                                        fit: BoxFit.cover,
+                                        placeholder: (context, url) => Icon(
+                                          Icons.image,
+                                          size: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              4,
+                                          color: Colors.grey,
+                                        ),
+                                        errorWidget: (context, url, error) =>
+                                            Icon(
+                                          Icons.image,
+                                          size: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              4,
+                                          color: Colors.grey,
+                                        ),
+                                        width: double.infinity,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Product: ${product.productName ?? ""}",
+                                      style:
+                                          Theme.of(context).textTheme.bodyLarge,
+                                    ),
+                                    SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.01),
+                                    Text(
+                                        'Price:\$${product.productPrice != null ? product.productPrice!.toStringAsFixed(2) : ""}'),
+                                  ],
                                 ),
                               ),
-                            );
-                          },
-                          child: Card(
-                            elevation: 5,
-                            child: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    child: CachedNetworkImage(
-                                      imageUrl:
-                                          "${ApiUrl.imageUrl}/${product.productImage}",
-                                      fit: BoxFit.cover,
-                                      placeholder: (context, url) => Icon(
-                                        Icons.image,
-                                        size:
-                                            MediaQuery.of(context).size.width /
-                                                4,
-                                        color: Colors.grey,
-                                      ),
-                                      errorWidget: (context, url, error) =>
-                                          Icon(
-                                        Icons.image,
-                                        size:
-                                            MediaQuery.of(context).size.width /
-                                                4,
-                                        color: Colors.grey,
-                                      ),
-                                      width: double.infinity,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Product: ${product.productName ?? ""}",
-                                    style:
-                                        Theme.of(context).textTheme.bodyLarge,
-                                  ),
-                                  SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.01),
-                                  Text(
-                                      'Price:\$${product.productPrice != null ? product.productPrice!.toStringAsFixed(2) : ""}'),
-                                ],
-                              ),
                             ),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     )
                   : const Center(
                       child: Text("No data"),
